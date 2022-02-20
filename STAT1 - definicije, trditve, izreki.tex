@@ -1,0 +1,94 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+
+\usepackage{amsthm}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{relsize}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{xcolor}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\c}{\mathsf{c}}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\oklepaj}[1]{\left(#1\right)}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\rr}{[-\infty,\infty]}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\5}{\vspace{0.5cm}}
+\newcommand{\vp}{(\Omega, \F, \P)}
+\newcommand{\ps}{(E, \mathscr{E})}
+\newcommand{\bor}{(\R, \B(\R))}
+
+\newcommand{\B}{\mathscr{B}}
+\newcommand{\F}{\mathscr{F}}
+\newcommand{\PP}{\mathscr{P}}
+
+\theoremstyle{definition}
+\newtheorem{definicija}{Definicija}[section]
+
+\theoremstyle{definition}
+\newtheorem{trditev}{Trditev}[section]
+
+\theoremstyle{definition}
+\newtheorem{izrek}{Izrek}[section]
+
+\theoremstyle{definition}
+\newtheorem{metoda}{Metoda}[section]
+
+\newtheorem*{posledica}{Posledica}
+\newtheorem*{opomba}{Opomba}
+\newtheorem*{komentar}{Komentar}
+\newtheorem{lema}{Lema}
+\newtheorem*{dokaz}{Dokaz}
+\newtheorem*{posplošitev}{Posplošitev}
+\newtheorem*{dogovor}{Dogovor}
+\newtheorem*{sklep}{Sklep}
+
+\title{Statistika 1 - definicije, trditve in izreki}
+\author{Oskar Vavtar \\
+po predavanjih profesorja Jaka Smrekarja}
+\date{2021/22}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+
+% #################################################################################################
+
+\section{Zadostnost in sorodne teme}
+\5
+
+\definicija{\textit{Statistični model} je množica dopustnih porazdelitvenih zakonov za slučajni vektor $X$. Označimo jo $\PP$. Zanjo a priori privzamemo, da velja $\P_X \in \PP$. Tu je $\P_X$ porazdelitveni zakon slučajnega vektorja $X$, torej verjetnostna mera definirana s predpisom
+$$\P_X(B) ~=~ \P(X \in B)$$
+za $B \in \B(\R^n)$. Torej je $\PP$ množica verjetnostnih mer na $(\R^n,\B(\R^n))$.}
+\5
+
+\opomba{Če so $X_i$ n.e.p., torej $X_i \overset{\textsc{nep}}{\sim} X_1$, je $\P_X$ produktna verjetnost
+\begin{align*}
+\P_X ~&=~ \P_{X_1} \times \P_{X_2} \times \ldots \times \P_{X_n} \\
+&=~ \P_{X_1} \times \P_{X_1} \times  \ldots \times \P_{X_1},
+\end{align*}
+in $\PP$ lahko nadomestimo z množico dopustnih porazdelitev za $X_1$.}
+\5
+
+\definicija{Model $\PP$ je \textit{parametričen}, če ga je mogoče parametrizirati kot
+$$\PP ~=~ \set{\P_\vartheta \mid \vartheta \in \Theta},$$
+kjer je $\Theta$ podmnožica nekega $\R^d$ za primerno število $d$.\footnote{Tedaj je vsaka dopustna porazdelitev določena z $d$ realnoštevilskimi parametri.} Običajno na $\Theta$ zahtevamo dodatne pogoje, kot npr. da je diskretna, ali da je odprta ali, splošneje, da je gladka podmnogoterost brez roba. Množici $\Theta$ pravimo \textit{prostor parametrov}. Če model ni parametričen, je \textit{neparametričen}.}
+\5
+
+\definicija[?]{Naj bo $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta}$ model, kjer je $\Theta$ neka indeksna množica, in naj bo $\nu$ neka fiksna $\sigma$-končna mera na $(\R^n,\B(\R^n))$. Če za $\forall \vartheta \in \Theta$ velja $\P_\vartheta \ll \nu$, pravimo, da je $\PP$ \textit{dominiran} z $\nu$. Tedaj model označimo z gostotami
+$$f(\boldsymbol{\cdot}\,; \vartheta) ~=~ \frac{d\P_\vartheta}{d\nu}.$$
+Tedaj velja
+$$\P_\vartheta(B) ~=~ \P_\vartheta(X \in B) ~=~ \int_B f(x;\vartheta)\,d\nu(x).$$
+
+% #################################################################################################
+
+
+\end{document}
