@@ -29,6 +29,7 @@
 \newcommand{\Var}{\text{Var}}
 \newcommand{\FI}{\text{FI}}
 \newcommand{\notr}{\text{int}}
+\newcommand{\grad}{\text{grad}}
 
 \newcommand{\B}{\mathscr{B}}
 \newcommand{\F}{\mathscr{F}}
@@ -118,13 +119,13 @@ $$\P_\vartheta(B) ~=~ \P_\vartheta(X \in B) ~=~ \int_B f(x;\vartheta)\,d\nu(x).$
 \5
 
 \definicija{Naj bosta $X$ in $Y$ slučajna vektorja z vrednostmi v $\R^n$ in $\R^m$. \textit{Pogojne porazdelitve} $\P(X \in B \mid Y = y)$ so Borelove mere\footnote{Mere na $B \in \B(\R^n)$.} za vsak $y \in \R^m$ po ena, za katere velja
-$$\E[\phi(X,Y)] ~=~ \int_{\R^m} \left[\int_{\R^m} \phi(x,y)\,d\P_{(X \mid Y = y)}(x)\right]\,dP_Y(y)$$
+$$\E[\phi(X,Y)] ~=~ \int_{\R^m} \left[\int_{\R^n} \phi(x,y)\,d\P_{(X \mid Y = y)}(x)\right]\,dP_Y(y)$$
 za vse $\phi$ z vrednostmi v $[0,\infty]$ in za vse $\phi \in L^1$. Če imamo dano družino pogojnih porazdelitev $\set{\P(X \in \pika \mid y \in \R^n)}$, potem za $\forall B \in \B(\B^n)$ velja
-$$\P(X \in \B \mid Y = y) ~=~ \lim_{s \searrow 0} \P(X \mid B \mid Y \in \underbrace{B(y,s)}_{\text{metrična krogla}})$$
+$$\P(X \in \B \mid Y = y) ~=~ \lim_{s \searrow 0} \P(X \in B \mid Y \in \underbrace{B(y,s)}_{\text{metrična krogla}})$$
 za skoraj vse $y$: obstaja množica $N_B \subset \R^m$, $\P(Y \in N_B) = 0$, da velja zgornja enakost za $\forall y \notin N_B$.}
 \5
 
-\definicija{Privzemimo, da ima vektor $(X,Y)$ gostoto $f_{X,Y}$ glede na produktno $\sigma$-končno mero $\mu\times\nu$, kjer sta $\mu,\nu$ $\sigma$-končni meri na $\B(\R^N),\B(\R^m)$. Izkaže se, da sta
+\definicija{Privzemimo, da ima vektor $(X,Y)$ gostoto $f_{X,Y}$ glede na produktno $\sigma$-končno mero $\mu\times\nu$, kjer sta $\mu,\nu$ $\sigma$-končni meri na $\B(\R^n),\B(\R^m)$. Izkaže se, da sta
 \begin{align*}
 f_X(x) ~&=~ \int_{\R^m}f_{(X,Y)(x,y)}\,d\nu(y) \\
 f_Y(y) ~&=~ \int_{\R^n}f_{(X,Y)(x,y)}\,d\mu(x)
@@ -170,9 +171,9 @@ za neko $\sigma$-končno mero $\nu$ na $\B(\R^n)$ (tako, da $\PP \ll \nu$) ter f
 \5
 
 \definicija{Naj bo $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta}$ model za $X$ z vrednostmi v $\R^n$. Statistika $T: \R^n \rightarrow \R^m$ je \textit{kompletna} (ali \textit{polna}), če za vsako merljivo funkcijo $\phi: \R^m \rightarrow \R$ iz privzatke
-$$\forall \vartheta \in \Theta: ~\E_\vartheta\oklepaj{\phi(TX)}$$
+$$\forall \vartheta \in \Theta: ~\E_\vartheta\left[\phi(TX)\right] = 0$$
 sledi
-$$\phi(T) ~=~ 0 \quad \P\text{-s.g.}$$
+$$\phi(TX) ~=~ 0 \quad \P\text{-s.g.}$$
 Torej $\exists N \in \R^n$, za katero je $\P_\vartheta(N) = \P_\vartheta(X \in N) = 0 ~\forall \vartheta \in \Theta$ in $\forall \vartheta \in \Theta, \forall x \notin N: \phi(Tx) = 0$.\footnote{Del privzetka: $\phi \in L^1(\P_{\vartheta, T}) ~\forall \vartheta \in \Theta$.}
 \5
 
@@ -191,7 +192,7 @@ za $T: \R^n \ra \R^m$ in $Q: \Theta \ra \R^m$ ima \textit{poln rang}, če slika 
 $$\forall \vartheta \in \Theta, ~\forall D \in \B(\R^r): ~\P_\vartheta(VX \in D) ~=~ S(D).$$}
 \5
 
-\izrek{Naj bosta v modelu $\PP$ $T: \R^n \ra \R^m$ kompletna zadostna in $V: \R^n \ra \R^r$ postranska statistika. Tedaj sta $T$ in $V$ neodvisni glede na $\PP$:
+\izrek[Basu]{Naj bosta v modelu $\PP$ $T: \R^n \ra \R^m$ kompletna zadostna in $V: \R^n \ra \R^r$ postranska statistika. Tedaj sta $T$ in $V$ neodvisni glede na $\PP$:
 \begin{align*}
 \forall \vartheta \in \Theta, ~\forall C \in \B(\R^m), ~\forall D &\in \B(\R^r): \\
 ~\P_\vartheta(TX &\in C, VX \in D) ~=~ \P_\vartheta(TX \in C) \P(VX \in D).
@@ -216,7 +217,7 @@ A \leq B ~&\iff~ B - A \leq 0 \\
 \5
 
 \izrek[Rao-Blackwell]{Naj bo $T: \R^n \ra \R^m$ kompletna zadostna statistika za $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta}$ in naj bo $W: \R^n \ra \R^r$ nepristranska cenilka za $e: \Theta \ra \R^r$. Tedaj je
-$$U(X) ~=~ \E_\vartheta[WX \mid TX]\oklepaj{U(X(\omega))}$$
+$$U(X) ~=~ \E_\vartheta[WX \mid TX]\,\footnote{Za $\omega \in \Omega$ je $U(X(\omega)) = \E[WX \mid TX = TX(\omega)]$.}$$
 nepristranska cenilka za $e$, ki ima med vsemi nepristranskimi cenilkami za $e$ enakomerno najmanjšo disperzijo: če je $U^*$ poljubna druga nepristranska cenilka za $e$, ima $U$ enakomerno manjšo disperzijo od $U^*$.}
 \5
 
@@ -238,25 +239,25 @@ nepristranska cenilka za $e$, ki ima med vsemi nepristranskimi cenilkami za $e$ 
 
 \definicija{Funkciji $V_\vartheta: \R^n \ra \R^d$,
 \begin{align*}
-V_\vartheta(x) ~&=~ \oklepaj{\frac{\partial}{\partial\vartheta_1}\ln f(x;\vartheta),\ldots, \frac{\partial}{\partial\vartheta_d}\ln f(x; \vartheta} \\
-&=~ \nabla_\vartheta\oklepaj{ln f(x; \vartheta)}
+V_\vartheta(x) ~&=~ \oklepaj{\frac{\partial}{\partial\vartheta_1}\ln f(x;\vartheta),\ldots, \frac{\partial}{\partial\vartheta_d}\ln f(x; \vartheta)} \\
+&=~ \grad_\vartheta\oklepaj{\ln f(x; \vartheta)}
 \end{align*}
 pravimo \textit{funkcija Zbira}. Pri predavanjih smo izpeljali neenakost $\E_\vartheta[V_\vartheta(X)] = \underbrace{(0,\ldots,0)}_{d}$. Sledi
-$$\Var_\vartheta[V_\vartheta(X)] ~=~ \E[V_\vartheta(X)V_\vartheta(X)^\T] - 0.$$
+$$\Var_\vartheta[V_\vartheta(X)] ~=~ \E\left[V_\vartheta(X)V_\vartheta(X)^\T\right] - 0.$$
 Tej matrični funkciji parametra $\vartheta$ pravimo \textit{Fisherjeva informacija} tega modela. Formalno: $\FI: \Theta \ra \R^{d \times d}$, $\FI(\vartheta) = \Var_\vartheta[V_\vartheta(X)]$. Vrednosti Fisherjeve informacije so pozitivne simetrične matrike. Pravimo, da $\FI(\vartheta)$ meri količino informacije, ki jo o parametru $\vartheta$ nosi vektor $X$.}
 \5
 
-\trditev[Cram\'er-Rao/informacijska neenakost]{Privzemimo, da je $\Theta$ odprta v $\R$(interval) in da je $e: \Theta \ra \R$ ocenjevana funkcija. Naj veljajo reg. privzetki za obstoj $\FI$ in naj bo $U: \R^n \ra R$ nepristranska cenilka za $e$. Dalje, naj bo $e$ odvedljiva in naj velja
+\trditev[Cram\'er-Rao/informacijska neenakost]{Privzemimo, da je $\Theta$ odprta v $\R$(interval) in da je $e: \Theta \ra \R$ ocenjevana funkcija. Naj veljajo regulativni privzetki za obstoj $\FI$ in naj bo $U: \R^n \ra R$ nepristranska cenilka za $e$. Dalje, naj bo $e$ odvedljiva in naj velja
 \begin{align*}
 e'(\vartheta) ~&=~ \frac{d}{d\vartheta}\int U(x) f(x; \vartheta)\,d\nu(x) \\
 &=~ \int U(x) \frac{\partial f}{\partial\vartheta}(x; \vartheta)\,d\nu(x).
 \end{align*}
 Če za neki $\vartheta$ velja $\FI(\vartheta)>0$, velja ocena
-$$\Var_\vartheta(U(X)) ~\geq~ \frac{\oklepaj{e'(\vartheta)}^2}{\FI(\vartheta)}.$$}
+$$\Var_\vartheta[U(X)] ~\geq~ \frac{\oklepaj{e'(\vartheta)}^2}{\FI(\vartheta)}.$$}
 \5
 
 \komentar{Če gre za vzorec $X = (X_1,\ldots,X_n)$ NEP komponent, je $\FI(\vartheta) = n \cdot \FI^{(1)}(\vartheta)$ in se Cram\'er-Raova neenakost glasi
-$$\Var_\vartheta(X) ~\geq~ \frac{1}{n}\frac{\oklepaj{e'(\vartheta)}^2}{\FI^{(1)}(\vartheta)}.$$}
+$$\Var_\vartheta[U(X)] ~\geq~ \frac{1}{n}\frac{\oklepaj{e'(\vartheta)}^2}{\FI^{(1)}(\vartheta)}.$$}
 \5
 
 \posledica{Če je za neko nepristransko cenilko $U$ v Cram\'er-Rau dosežena enakost za vse $\vartheta$, je $U$ avtomatično NCEND.}
@@ -323,11 +324,11 @@ $$\P_1(B^*) ~=~ \max\set{\P_1(B) \mid B \subset K, ~\P_0(B) \leq \alpha}.$$}
 \subsection{Randomizirani preizkusi}
 \5
 
-\definicija{\textit{Randomiziran preizkus} domneve $\H \subset \P$ je Borelova funkcija $\phi: \R^n \ra [0,1]$ z naslednjo interpretacijo:
+\definicija{\textit{Randomiziran preizkus} domneve $\H \subset \PP$ je Borelova funkcija $\phi: \R^n \ra [0,1]$ z naslednjo interpretacijo:
 \begin{enumerate}
 	\item[(i)] $\phi(x) = \phi(x_1,\ldots,x_n) = 1$ $\Rightarrow$ $\H$ zavrnemo
 	\item[(ii)] $\phi(x) = 0$ $\Rightarrow$ $\H$ ne zavrnemo
-	\item[(iii)] $\phi(x) = y \in (0,1)$ $\Rightarrow$ $\H$ zavrnemo z verjetnostjo $y$\footnote{vzorčimo $U \sim \U[0,1]$, zavrnemo $\H$, če $U \leq y$}
+	\item[(iii)] $\phi(x) = y \in (0,1)$ $\Rightarrow$ $\H$ zavrnemo z verjetnostjo $\gamma$\footnote{vzorčimo $U \sim \U[0,1]$, zavrnemo $\H$, če $U \leq \gamma$}
 \end{enumerate}
 Indeksirajmo $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta}$. Funkcija preizkusa $\phi$ je $\beta_\phi: \Theta \ra [0,1]$,
 $$\beta_\phi ~=~ \E_\vartheta[\phi(X)].\footnote{Pripomnimo, da je $\E_\vartheta[\1_B(X)] = \P_\vartheta(X \in B).$}$$}
@@ -337,10 +338,8 @@ $$\beta_\phi ~=~ \E_\vartheta[\phi(X)].\footnote{Pripomnimo, da je $\E_\vartheta
 $$\forall \vartheta \in A: ~ \beta_\phi(\vartheta) \geq \beta_\psi(\vartheta).$$}
 \5
 
-\pagebreak
-
 \trditev{Naj bo $T$ zadostna statistika za model $\PP$ (za slučajni vektor razsežnosti $n$) in naj bo $\phi: \R^n \ra [0,1]$ neki preizkus. Definirajmo\footnote{Zaradi zadostnosti je to dobro definirana funkcija.} $\tilde{\phi}: \R^n \ra [0,1]$ s predpisom
-$$\tilde{\phi}(x) ~:=~ \E_\vartheta[\phi \mid T = Tx].$$
+$$\tilde{\phi}(x) ~:=~ \E_\vartheta[\phi(X) \mid T = Tx].$$
 To je preizkus z \textit{isto} funkcijo moči kot $\phi$.}
 \5
 
@@ -355,8 +354,7 @@ $$\phi(x) ~=~ \begin{cases}
 \end{cases}$$
 ki je najmočnejši med vsemi preizkusi $\H$ proti $\A$ stopnje značilnosti $\alpha$. Za $\phi$ zgornje oblike sta $D \geq 0$ in $\gamma \in [0,1]$ v bistvu enolično določeni z zahtevo, da je velikost enaka $\alpha$, torej
 \begin{align*}
-\E_{\P_0}[\phi] ~&=~ \E_{\P_0}[\phi(X)] \\
-&=~ \P_0\oklepaj{\set{f_1(X) > D \cdot f_0(X)}} + \gamma \P_0\oklepaj{\set{f_1(X) = D \cdot f_0(X)}} \\
+\E_{\P_0}[\phi(X)] ~&=~ \P_0\oklepaj{\set{f_1(X) > D \cdot f_0(X)}} + \gamma \P_0\oklepaj{\set{f_1(X) = D \cdot f_0(X)}} \\
 &=~ D \cdot f_0(X) \\
 &=~ \alpha.
 \end{align*}}
@@ -383,32 +381,32 @@ ki je najmočnejši med vsemi preizkusi $\H$ proti $\A$ stopnje značilnosti $\a
 \5
 
 \izrek{Privzemimo eksponentni model z gostotami oblike
-$$f(x; \vartheta) ~=~ e^{-\psi(\vartheta)}e^{Q(\vartheta)\cdot T(x)} h(x)$$
-za $x \in \R^n$ glede na neko $\sigma$-končno mero $\nu$. Dalje privzemimo, da je $\Theta \subset \R$ interval in da je $Q$ strogo monotonal. Naj bo $\vartheta_0 \in \Theta$ in naj bo $\alpha \in (0,1)$. Za domnevo $\vartheta \leq \vartheta_0$ proti $\vartheta > \vartheta_0$ obstaja\footnote{V primeru, ko je $Q$ naraščajoča oz. z obrnjenimi relacijami, ko je $Q$ padajoča.} preizkus oblike
+$$f(x; \vartheta) ~=~ e^{-\psi(\vartheta)}e^{Q(\vartheta)\cdot Tx} h(x)$$
+za $x \in \R^n$ glede na neko $\sigma$-končno mero $\nu$. Dalje privzemimo, da je $\Theta \subset \R$ interval in da je $Q$ strogo monotona. Naj bo $\vartheta_0 \in \Theta$ in naj bo $\alpha \in (0,1)$. Za domnevo $\vartheta \leq \vartheta_0$ proti $\vartheta > \vartheta_0$ obstaja\footnote{V primeru, ko je $Q$ naraščajoča oz. z obrnjenimi relacijami, ko je $Q$ padajoča.} preizkus oblike
 $$\phi(x) ~=~ \begin{cases}
-1\,; ~&T(x) > C, \\
-\gamma\,; ~&T(x) = C, \\
-0\,; ~&T(x) < C,
-\end{cases}$$
+1\,; ~&Tx > C, \\
+\gamma\,; ~&Tx = C, \\
+0\,; ~&Tx < C,
+\end{cases}\footnote{Za $x = (x_1,\ldots,x_n)$ je $Tx = \sum_{i=1}^n x_i$.}$$
 kjer sta $C$ in $\gamma$ v bistvu enolično določeni z zahtevo
-$$\E_{\vartheta_0}[\phi] ~=~ \P_{\vartheta_0}(T>C) + \gamma \P_{\vartheta_0}(T=C) ~=~ \alpha.$$
+$$\E_{\vartheta_0}[\phi(X)] ~=~ \P_{\vartheta_0}(TX>C) + \gamma \P_{\vartheta_0}(TX=C) ~=~ \alpha.$$
 Ta preizkus ima velikost $\alpha$ in je najmočnejši med vsemi preizkusi stopnje značilnosti $\alpha$ za $\vartheta \leq \vartheta_0$ proti $\vartheta > \vartheta_0$.}
 \5
 
 \definicija{Preizkus $\phi$ domneve $H \in \H$ proti alternativi $A \in \A$ je nepristranski preizkus stopnje značilnosti $\alpha$, če je stopnje značilnosti $\alpha$ in velja
-$$\forall \vartheta \in A: ~\beta_\phi(\vartheta) = \E_\vartheta[\phi] \geq \alpha.$$}
+$$\forall \vartheta \in A: ~\beta_\phi(\vartheta) = \E_\vartheta[\phi(X)] \geq \alpha.$$}
 \5
 
-\izrek{Naj veljajo privzetki prejšnjega izrek, naj bo $\vartheta_0 \in \notr(\Theta)$ in naj bo $Q$ zvezno odvedljiva v $\vartheta_0$ s $Q'(\vartheta_0) \neq 0$ ($\im Q vsebuje odprt interval$). Naj vo še $\alpha \in (0,1)$. Za domnevo $\vartheta = \vartheta_0$ proti $\vartheta \neq \vartheta_0$ obstaja preizkus oblike
+\izrek{Naj veljajo privzetki prejšnjega izrek, naj bo $\vartheta_0 \in \notr(\Theta)$ in naj bo $Q$ zvezno odvedljiva v $\vartheta_0$ s $Q'(\vartheta_0) \neq 0$ ($\im Q$ vsebuje odprt interval). Naj vo še $\alpha \in (0,1)$. Za domnevo $\vartheta = \vartheta_0$ proti $\vartheta \neq \vartheta_0$ obstaja preizkus oblike
 $$\phi(x) ~=~ \begin{cases}
-1\,; ~&T(x) < C_1 ~\text{ali}~ T(x) > C_2, \\
-\gamma_i\,; ~&T(x) = C_i, ~i \in \set{1,2}, \\
-0\,; ~&T(x) \in (C_1, C_2),
+1\,; ~&Tx < C_1 ~\text{ali}~ Tx > C_2, \\
+\gamma_i\,; ~&Tx = C_i, ~i \in \set{1,2}, \\
+0\,; ~&Tx \in (C_1, C_2),
 \end{cases}$$
 kjer so konstantne enolično določene z zahtevama
 \begin{itemize}
-	\item $\E_{\vartheta_0}[\phi] = \alpha$,
-	\item $\beta'(\vartheta_0) = \frac{d}{d\vartheta_0}\E_\vartheta[\phi] \Big|_{\vartheta = \vartheta_0} = 0$.
+	\item $\E_{\vartheta_0}[\phi(x)] = \alpha$,
+	\item $\beta'(\vartheta_0) = \frac{d}{d\vartheta_0}\E_\vartheta[\phi(X)] \Big|_{\vartheta = \vartheta_0} = 0$.
 \end{itemize}
 Ta preizkus je nepristranski in enakomerno najmočnejši med vsemi nepristranskimi preizkusi $\vartheta = \vartheta_0$ proti $\vartheta \neq \vartheta_0$ stopnje značilnosti $\alpha$.}
 \5
