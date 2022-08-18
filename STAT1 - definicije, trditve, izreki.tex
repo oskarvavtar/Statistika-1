@@ -120,15 +120,15 @@ $$\P_\vartheta(B) ~=~ \P_\vartheta(X \in B) ~=~ \int_B f(x;\vartheta)\,d\nu(x).$
 
 \definicija{Naj bosta $X$ in $Y$ slučajna vektorja z vrednostmi v $\R^n$ in $\R^m$. \textit{Pogojne porazdelitve} $\P(X \in B \mid Y = y)$ so Borelove mere\footnote{Mere na $B \in \B(\R^n)$.} za vsak $y \in \R^m$ po ena, za katere velja
 $$\E[\phi(X,Y)] ~=~ \int_{\R^m} \left[\int_{\R^n} \phi(x,y)\,d\P_{(X \mid Y = y)}(x)\right]\,dP_Y(y)$$
-za vse $\phi$ z vrednostmi v $[0,\infty]$ in za vse $\phi \in L^1$. Če imamo dano družino pogojnih porazdelitev $\set{\P(X \in \pika \mid y \in \R^n)}$, potem za $\forall B \in \B(\B^n)$ velja
-$$\P(X \in \B \mid Y = y) ~=~ \lim_{s \searrow 0} \P(X \in B \mid Y \in \underbrace{B(y,s)}_{\text{metrična krogla}})$$
+za vse $\phi$ z vrednostmi v $[0,\infty]$ in za vse $\phi \in L^1$. Če imamo dano družino pogojnih porazdelitev $\set{\P(X \in \pika \mid Y = y) \mid y \in \R^n}$, potem za $\forall B \in \B(\R^n)$ velja
+$$\P(X \in B \mid Y = y) ~=~ \lim_{s \searrow 0} \P(X \in B \mid Y \in \underbrace{B(y,s)}_{\text{metrična krogla}})$$
 za skoraj vse $y$: obstaja množica $N_B \subset \R^m$, $\P(Y \in N_B) = 0$, da velja zgornja enakost za $\forall y \notin N_B$.}
 \5
 
 \definicija{Privzemimo, da ima vektor $(X,Y)$ gostoto $f_{X,Y}$ glede na produktno $\sigma$-končno mero $\mu\times\nu$, kjer sta $\mu,\nu$ $\sigma$-končni meri na $\B(\R^n),\B(\R^m)$. Izkaže se, da sta
 \begin{align*}
-f_X(x) ~&=~ \int_{\R^m}f_{(X,Y)(x,y)}\,d\nu(y) \\
-f_Y(y) ~&=~ \int_{\R^n}f_{(X,Y)(x,y)}\,d\mu(x)
+f_X(x) ~&=~ \int_{\R^m}f_{(X,Y)}(x,y)\,d\nu(y) \\
+f_Y(y) ~&=~ \int_{\R^n}f_{(X,Y)}(x,y)\,d\mu(x)
 \end{align*}
 robni gostoti glede na $\mu,\nu$. Če definiramo
 $$f_{(X \mid Y)}(x \mid y) ~:=~ \begin{cases}
@@ -143,7 +143,7 @@ definirana družina pogojnih porazdelitev $(X \mid Y)$.}
 \izrek[Fisher-Neymanov faktorizacijski izrek]{Naj bo $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta}$ model za $X$ z vrednostmi v $\R^n$, ki je dominiran s $\sigma$-končno mero $\nu$, in naj bo $T: \R^n \rightarrow \R^m$ statistika. Tedaj je $T$ zadostna za $\PP$ \textit{čee} obstaja družina Borelovih funkcij $g(t; \vartheta)$ za $t \in \R^m$ in Borelova funkcija $h: \R^n \rightarrow [0,\infty)$, tako da velja
 $$\frac{d\P}{d\nu}(x) ~=~ g(Tx; \vartheta) \cdot h(x), \quad \forall \vartheta \in \Theta.$$
 Eksplicitno: $\forall \vartheta \in \Theta, \forall B \in \B(\R^n)$,
-$$\P_\vartheta(B) ~=~ \P_\vartheta(X \in B) ~=~ \int_{\R^n} g(Tx; \vartheta)h(x)\,d\nu.$$
+$$\P_\vartheta(B) ~=~ \P_\vartheta(X \in B) ~=~ \int_B g(Tx; \vartheta)h(x)\,d\nu(x).$$
 To pomeni: dopustni porazdelitveni zakoni imajo gostote glede na ``$\nu$'', ki so od $x$ odvisne le preko vrednosti statistike $T$ na njem.}
 \5 
 
@@ -181,7 +181,7 @@ Torej $\exists N \in \R^n$, za katero je $\P_\vartheta(N) = \P_\vartheta(X \in N
 \begin{equation} \label{eq:1}
 f(x; \vartheta) ~=~ \frac{d\P_\vartheta}{d\nu}(x) ~=~ C(\vartheta) e^{\sk{Q(\vartheta), T(x)}}h(x)
 \end{equation}
-za $T: \R^n \ra \R^m$ in $Q: \Theta \ra \R^m$ ima \textit{poln rang}, če slika \hbox{$\im Q = \set{Q(\vartheta) \mid \vartheta \in \Theta}$} preslikave $Q$ vsebuje vsaj eno odprto kroglo, torej ima $\im Q$ nepravzno \hbox{notranjost} v $\R^m$.}
+za $T: \R^n \ra \R^m$ in $Q: \Theta \ra \R^m$ ima \textit{poln rang}, če slika \hbox{$\im Q = \set{Q(\vartheta) \mid \vartheta \in \Theta}$} preslikave $Q$ vsebuje vsaj eno odprto kroglo, torej ima $\im Q$ neprazno \hbox{notranjost} v $\R^m$.}
 \5
 
 \izrek{Če ima eksponentna družina (\ref{eq:1}) poln rang, je $T$ kompletna (in zadostna) statistika.}
@@ -210,7 +210,7 @@ Tu je
 \end{align*}
 matrika razsežnosti $r \times r$. Zahtevo (\ref{eq:2}) v primeru $r \geq 2$ razumemo matrično:
 \begin{align*}
-A \leq B ~&\iff~ B - A \leq 0 \\
+A \leq B ~&\iff~ B - A \geq 0 \\
 &\iff~ \forall x: \sk{(B-A)x, x} \geq 0 \\
 &\iff~ \text{vse lastne vrednosti}~B-A~\text{so}~ \geq 0
 \end{align*}}
@@ -269,7 +269,7 @@ C^\T & B
 \end{bmatrix}$ pozitivna in $B$ obrnljiva, je $A-CB^{-1}C^\T$ tudi pozitivna.}
 \5
 
-\izrek[Posplošena Cram\'er-Raova neenakost]{Naj za parametrični model $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta} \ll \nu$ veljajo regulamantni privzetki iz začetka razdelka in smiselne posplošitve reg. privzetkov iz eno-parametrične Cram\'er-Raove ocene. Če je $U$ nepristranska cenilka za diferenciabilno $e: \Theta \ra \R^r$, tedaj
+\izrek[Posplošena Cram\'er-Raova neenakost]{Naj za parametrični model $\PP = \set{\P_\vartheta \mid \vartheta \in \Theta} \ll \nu$ veljajo regulativni privzetki iz začetka razdelka in smiselne posplošitve reg. privzetkov iz eno-parametrične Cram\'er-Raove ocene. Če je $U$ nepristranska cenilka za diferenciabilno $e: \Theta \ra \R^r$, tedaj
 $$\forall \vartheta: \FI(\vartheta) ~\text{obrnljiva} ~\Longrightarrow~ \Var_\vartheta[U(X)] \geq \J_e(\vartheta) \cdot \FI^{-1}(\vartheta)\cdot\J_e(\vartheta)^\T.$$}
 \5
 
@@ -300,9 +300,6 @@ indeksne parametrične množice $\Theta$.}
 \5
 
 \definicija{\textit{Velikost preizkusa} je $\sup\set{\beta(\vartheta) \mid \vartheta \in H}$, interpretiramo kot ``največjo'' možno verjetnost napake 1. vrste, Preizkus je pri stropnji značilnosti $\alpha \in (0,1)$, če je velikost $\leq \alpha$.}
-\5
-
-\definicija{Preizkus je enakomerno najmočnejši med vsemi preizkusi stopnje značilnost $\alpha$ (velikost $\leq \alpha$), če je enakomerno močnejši od vsakega drugega preizusa stopnje značilnosti $\alpha$.}
 \5
 
 % *************************************************************************************************
@@ -355,7 +352,6 @@ $$\phi(x) ~=~ \begin{cases}
 ki je najmočnejši med vsemi preizkusi $\H$ proti $\A$ stopnje značilnosti $\alpha$. Za $\phi$ zgornje oblike sta $D \geq 0$ in $\gamma \in [0,1]$ v bistvu enolično določeni z zahtevo, da je velikost enaka $\alpha$, torej
 \begin{align*}
 \E_{\P_0}[\phi(X)] ~&=~ \P_0\oklepaj{\set{f_1(X) > D \cdot f_0(X)}} + \gamma \P_0\oklepaj{\set{f_1(X) = D \cdot f_0(X)}} \\
-&=~ D \cdot f_0(X) \\
 &=~ \alpha.
 \end{align*}}
 \5
@@ -397,7 +393,7 @@ Ta preizkus ima velikost $\alpha$ in je najmočnejši med vsemi preizkusi stopnj
 $$\forall \vartheta \in A: ~\beta_\phi(\vartheta) = \E_\vartheta[\phi(X)] \geq \alpha.$$}
 \5
 
-\izrek{Naj veljajo privzetki prejšnjega izrek, naj bo $\vartheta_0 \in \notr(\Theta)$ in naj bo $Q$ zvezno odvedljiva v $\vartheta_0$ s $Q'(\vartheta_0) \neq 0$ ($\im Q$ vsebuje odprt interval). Naj vo še $\alpha \in (0,1)$. Za domnevo $\vartheta = \vartheta_0$ proti $\vartheta \neq \vartheta_0$ obstaja preizkus oblike
+\izrek{Naj veljajo privzetki prejšnjega izrek, naj bo $\vartheta_0 \in \notr(\Theta)$ in naj bo $Q$ zvezno odvedljiva v $\vartheta_0$ s $Q'(\vartheta_0) \neq 0$ ($\im Q$ vsebuje odprt interval). Naj bo še $\alpha \in (0,1)$. Za domnevo $\vartheta = \vartheta_0$ proti $\vartheta \neq \vartheta_0$ obstaja preizkus oblike
 $$\phi(x) ~=~ \begin{cases}
 1\,; ~&Tx < C_1 ~\text{ali}~ Tx > C_2, \\
 \gamma_i\,; ~&Tx = C_i, ~i \in \set{1,2}, \\
@@ -405,7 +401,7 @@ $$\phi(x) ~=~ \begin{cases}
 \end{cases}$$
 kjer so konstantne enolično določene z zahtevama
 \begin{itemize}
-	\item $\E_{\vartheta_0}[\phi(x)] = \alpha$,
+	\item $\E_{\vartheta_0}[\phi(X)] = \alpha$,
 	\item $\beta'(\vartheta_0) = \frac{d}{d\vartheta_0}\E_\vartheta[\phi(X)] \Big|_{\vartheta = \vartheta_0} = 0$.
 \end{itemize}
 Ta preizkus je nepristranski in enakomerno najmočnejši med vsemi nepristranskimi preizkusi $\vartheta = \vartheta_0$ proti $\vartheta \neq \vartheta_0$ stopnje značilnosti $\alpha$.}
@@ -418,7 +414,7 @@ Ta preizkus je nepristranski in enakomerno najmočnejši med vsemi nepristranski
 
 \definicija{Naj bosta $Z,H$ neodvisni slučajni spremenljivki, $Z \sim \NN(\lambda,1), H \sim \chi_h^2$. Tedaj pravimo, da ima
 $$\t ~=~ \frac{Z}{\sqrt{\frac{H}{h}}}$$
-\textit{(necentralno) Studentovo porazdelitev} s $h$ prostorskimi stopnjami in necentralnostnim parametrom $\lambda$. Pišemo $\t \sim t_n(\lambda)$. To pomeni $\t \sim t_{n-1}\oklepaj{\frac{\mu-\mu_0}{\frac{\sigma}{\sqrt{n}}}}$.
+\textit{(necentralno) Studentovo porazdelitev} s $h$ prostorskimi stopnjami in necentralnostnim parametrom $\lambda$. Pišemo $\t \sim t_h(\lambda)$. 
 
 % #################################################################################################
 
